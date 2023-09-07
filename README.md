@@ -1,6 +1,6 @@
 # Word Frequency Analyzer
 
-This is a simple Node.js script that analyzes the frequency of words using scraped data and Yomichan dictionaries.
+This is a simple Node.js script that analyzes the frequency of words using _any Yomichan compatiable_ *frequency* dictionary.
 
 ## Features
 
