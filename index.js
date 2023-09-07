@@ -28,7 +28,7 @@ const cc = {
       console.log(cc.boldRed("Error! ") + cc.yellow('There are ') + cc.boldRed('0') + cc.yellow(' files in the ') + cc.boldRed('words') + cc.yellow(' folder!'));
       process.exit();
     } else {
-      console.log(cc.yellow("Loading ") + cc.boldBlue('Scraped Words') + '...\n');
+      console.log(cc.yellow("Loading ") + cc.boldBlue('Scraped Words') + '...');
       scrapedWords = (await fs.readFile(wordsFile, "utf-8")).split("\n");
     }
 
@@ -51,8 +51,8 @@ const cc = {
     for (const scrapedWord of scrapedWords) {
       counter++;
       if (!processedWords.has(scrapedWord)) {
-        //process.stdout.write(`\r${loadingAnimation[animationIndex]} Processing word: ${scrapedWord} `);
-        process.stdout.write(cc.boldBlue(`\r${loadingAnimation[animationIndex]}`) + cc.yellow('Processing word: ') + cc.boldGreen(`${counter}`) + ' of ' + cc.boldRed(`${scrapedWords.length}\n`));
+        //process.stdout.write(cc.boldRed(`\r${loadingAnimation[animationIndex]}`) + cc.yellow(` Processing word `) + cc.boldRed(': ') + cc.boldYellow(`[ `) + cc.boldRed(`${counter}`) + cc.boldYellow(` ] `) + cc.boldBlue(`${scrapedWord}`) + cc.yellow(' of ') + cc.boldYellow(`[ `) + cc.boldRed(`${scrapedWord.length}`) + cc.boldYellow(` ] `));
+        process.stdout.write(cc.boldRed(`\r${loadingAnimation[animationIndex]}`) + cc.yellow(` Processing word `) + cc.boldRed(': ') + cc.boldBlue(`${scrapedWord}`));
         animationIndex = (animationIndex + 1) % loadingAnimation.length;
 
         const matchingEntry = yomichanDictionaries.map((dictionary) => dictionary.find((entry) => entry[0] === scrapedWord)).find(Boolean);
