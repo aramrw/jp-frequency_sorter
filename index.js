@@ -1,15 +1,38 @@
 const fs = require("fs").promises;
-const _ = require("lodash");
+//const _ = require("lodash");
+const chalk = require("chalk");
+const { count } = require("console");
+
+console.clear();
 
 const loadingAnimation = ["|", "/", "-", "\\"];
 let animationIndex = 0;
 
+const cc = {
+  boldRed: chalk.bold.red,
+  boldGreen: chalk.bold.greenBright,
+  boldYellow: chalk.bold.yellow,
+  boldBlue: chalk.bold.blue,
+  yellow: chalk.yellowBright,
+};
+
+
 (async () => {
   try {
-    console.log("Loading scraped words...");
-    const scrapedWords = (await fs.readFile("./scraped_words/kanji_words.txt", "utf-8")).split("\n");
+    const wordsFolder = (await fs.readdir("./words", "utf-8"));
+    //console.log(wordsDirectory[0])
+    let wordsFile = './words/' + wordsFolder[0];
 
-    console.log("Loading Yomichan dictionaries...");
+    if (wordsFolder.length == 0) {
+      console.clear();
+      console.log(cc.boldRed("Error! ") + cc.yellow('There are ') + cc.boldRed('0') + cc.yellow(' files in the ') + cc.boldRed('words') + cc.yellow(' folder!'));
+      process.exit();
+    } else {
+      console.log(cc.yellow("Loading ") + cc.boldBlue('Scraped Words') + '...\n');
+      scrapedWords = (await fs.readFile(wordsFile, "utf-8")).split("\n");
+    }
+
+    console.log(cc.yellow("Loading ") + cc.boldBlue('Yomichan dictionaries') + '...\n');
     const yomichanDictionaries = [
       require("./yomichan_dicts/jpdb.json"),
       // require("./yomichan_dicts/vn_v2.json"),
@@ -22,11 +45,14 @@ let animationIndex = 0;
 
     const messages = [];
     const processedWords = new Set();
+    let counter = 0;
 
-    console.log("Processing scraped words...");
+    console.clear();
     for (const scrapedWord of scrapedWords) {
+      counter++;
       if (!processedWords.has(scrapedWord)) {
-        process.stdout.write(`\r${loadingAnimation[animationIndex]} Processing word: ${scrapedWord}`);
+        //process.stdout.write(`\r${loadingAnimation[animationIndex]} Processing word: ${scrapedWord} `);
+        process.stdout.write(cc.boldBlue(`\r${loadingAnimation[animationIndex]}`) + cc.yellow('Processing word: ') + cc.boldGreen(`${counter}`) + ' of ' + cc.boldRed(`${scrapedWords.length}\n`));
         animationIndex = (animationIndex + 1) % loadingAnimation.length;
 
         const matchingEntry = yomichanDictionaries.map((dictionary) => dictionary.find((entry) => entry[0] === scrapedWord)).find(Boolean);
@@ -50,7 +76,9 @@ let animationIndex = 0;
     //console.log("\nWriting formatted console messages to 'formatted_console_output.txt'...");
     await fs.writeFile("./output/output.txt", formattedConsoleMessages.join("\n"), { encoding: "utf-8" });
 
-    console.log("Formatted console messages have been written to 'output.txt'.");
+    console.clear();
+    console.log(cc.boldGreen("Successfully ") + cc.yellow('formatted ') + cc.boldGreen(`${counter}`) + ' of ' + cc.boldRed(`${scrapedWords.length} `) + cc.yellow('words\n'));
+    console.log(cc.yellow((`${scrapedWords.length} `) + "words have been written to ") + cc.boldRed("'output.txt'") + ".");
   } catch (error) {
     console.error("An error occurred:", error);
   }
