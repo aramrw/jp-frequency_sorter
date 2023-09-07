@@ -19,3 +19,8 @@ This is a simple Node.js script that analyzes the frequency of words using scrap
 
    ```bash
    npm install lodash
+   ```
+   
+   ```bash
+   npm install chalk
+   ```
