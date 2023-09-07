@@ -5,7 +5,7 @@ This is a simple Node.js script that analyzes the frequency of words using _any_
 ## Features
 
 - Loads a list of scraped words from a file.
-- Loads _any_ [Yomichan](https://chrome.google.com/webstore/detail/yomichan/ogmnaimimemjmbakcfefmnahgdfhfami) compatible *frequency* dictionary. 
+- Loads [Yomichan](https://chrome.google.com/webstore/detail/yomichan/ogmnaimimemjmbakcfefmnahgdfhfami) compatible *frequency* dictionary. 
 - Processes words and finds their frequencies.
 - Writes the results to an output file.
 
