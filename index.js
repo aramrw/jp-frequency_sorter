@@ -65,11 +65,9 @@ const cc = {
       }
     }
 
-    const sortedMessages = messages.sort((a, b) => {
-      if (a.value === "N/A") return 1;
-      if (b.value === "N/A") return -1;
-      return a.value - b.value;
-    });
+    const sortedMessages = messages
+      .filter((message) => message.value !== "N/A") // Filter out words with "N/A" value
+      .sort((a, b) => a.value - b.value); // Sort the remaining words
 
     const formattedConsoleMessages = sortedMessages.map(({ word, value }) => `'${word}': "${value}"`);
 
