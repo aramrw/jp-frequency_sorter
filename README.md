@@ -16,10 +16,6 @@ This is a simple Node.js script that analyzes the frequency of any Japanese word
 2. Clone this repository.
 
 3. Install the **required dependencies**:
-
-   ```bash
-   npm install lodash
-   ```
    
    ```bash
    npm install chalk
